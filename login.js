@@ -5,7 +5,7 @@ $(document).ready(function () {
         let strid = $("#id").val();
         console.log(strid)
         let strpass = $("#password").val();
-        let ptid = /^cpa\d{3}$/
+        let ptid = /^\d{5}$/;
 
         if (ptid.test(strid)==false) {
             document.getElementById('id').className = 'form-control is-invalid';
@@ -22,11 +22,12 @@ $(document).ready(function () {
                 data: temp,
                 //dataType: "dataType",
                 success: function (response) {
-                    if(response=='success'){
-                        window.location.href='adminsuc.html';
-                    }
-                    else {
+                    //alert(response);
+                    if(response=='Invalid Credentails!!'){
                         alert(response);
+                    }
+                    else{
+                        window.location.href=response;
                     }
                 }
             });

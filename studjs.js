@@ -59,17 +59,24 @@ document.addEventListener("DOMContentLoaded", function (event) {
     //     $("#Resultdiv").toggle();
     // }
 
+    var uid;
+
     $("#stdetnav").on("click", function () {
         $("#Defspace").show();
         $("#formid1").hide();
         $("#certidiv").hide();
         $("#examdiv").hide();
         $("#Resultdiv").hide();
-        $("#addsub").hide();
-        
+        $('#mainexambody').hide();
         // alert("asdbkjahsk")
-        let temp = { flag: 3 };
 
+
+        let url = $(location).attr('href');
+
+        let turl = url.split('=');
+
+        let temp = { flag: 6, id: turl[1] };
+        uid=turl[1];
         $.ajax({
             type: "POST",
             url: "ajax.php",
@@ -93,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         $("#certidiv").hide();
         $("#examdiv").hide();
         $("#Resultdiv").hide();
-        $("#addsub").hide();
+        $('#mainexambody').hide();
 
     })
 
@@ -103,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         $("#certidiv").show();
         $("#examdiv").hide();
         $("#Resultdiv").hide();
-        $("#addsub").hide();
+        $('#mainexambody').hide();
 
     })
 
@@ -113,9 +120,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
         $("#certidiv").hide();
         $("#examdiv").show();
         $("#Resultdiv").hide();
-        $("#addsub").hide();
 
-        $("#addq").hide();
+
+        $('#mainexambody').hide();
+
 
         let temp = { flag: 4 };
 
@@ -125,9 +133,116 @@ document.addEventListener("DOMContentLoaded", function (event) {
             data: temp,
             success: function (response) {
                 //alert(response);
+                //alert(response);
                 $('#examsub').html(response);
             }
         });
+
+
+        $('#examver').on('click', function () {
+            if ($('#examsub').val() == null) {
+                alert("Select A Subject!!");
+            }
+            else {
+                if (navigator && navigator.userAgent && navigator.userAgent.indexOf('Mozilla') !== -1 && navigator.userAgent.indexOf('AppleWebKit') !== -1) {
+                    // JavaScript is supported
+
+                    $("#examdiv").hide();
+
+                    var qno = [];
+
+
+
+                    let temp = { flag: 8, sname: $('#examsub').val() };
+
+                    $.ajax({
+                        type: "POST",
+                        url: "ajax.php",
+                        data: temp,
+                        //dataType: "dataType",
+                        success: function (response) {
+                            $('#mainexambody').html(response);
+                        }
+                    });
+
+
+                    $('#mainexambody').show(function () {
+
+                        //finish button click
+                        $('#fbtn').on('click', function () {
+                            let temp = { flag: 9, sname: $('#examsub').val() };
+                            let trq;
+
+                            //console.log(typeof(uid));
+                            
+                            let soln={flag:10,sid:uid.replace("#",""),subid: $('#examsub').val()};
+                            $.ajax({
+                                type: "POST",
+                                url: "ajax.php",
+                                data: temp,
+                                //dataType: "dataType",
+                                success: function (response) {
+                                    //  console.log(response);
+                                    trq = response.split(',');
+                                    trq.pop();
+                                    //console.log(document.getElementsByName(response[0]));
+                                    //console.log(trq);
+
+
+                                    do {
+                                        let qn = trq.shift();
+
+                                        //console.log(document.getElementsByName(qn));
+
+                                        let radioButtons = document.getElementsByName(qn);
+
+                                        // Iterate through the radio buttons
+                                        for (var i = 0; i < radioButtons.length; i++) {
+                                            if (radioButtons[i].checked) {
+                                                // The current radio button is checked
+                                                let checkedValue = radioButtons[i].value;
+                                                //console.log('Checked value:', checkedValue);
+
+                                                //appending qno and ans to the object
+                                                soln[qn]=checkedValue;
+
+                                                // You can also access other attributes of the checked radio button
+                                                // For example: radioButtons[i].id, radioButtons[i].getAttribute('data-something'), etc.
+                                                break; // Exit the loop since we found the checked radio button
+                                            }
+                                        }
+                                    } while (trq.length != 0);
+
+                                    //console.log(soln);
+
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "ajax.php",
+                                        data: soln,
+                                        //dataType: "dataType",
+                                        success: function (response) {
+                                            //console.log(response);  
+                                            $("#resultnav").trigger("click");
+                                            $("#examdiv").hide();
+                                        }
+                                    });
+
+
+                                }
+                            });
+
+                        })
+
+                    });
+
+
+                } else {
+                    alert("JavaScript isn't working.. Cannot give the exam..");
+                }
+
+            }
+        })
+
 
 
 
@@ -141,45 +256,20 @@ document.addEventListener("DOMContentLoaded", function (event) {
         $("#certidiv").hide();
         $("#examdiv").hide();
         $("#Resultdiv").show();
-        $("#addsub").hide();
-    });
+        $('#mainexambody').hide();
 
+        let temp={flag:11,usid:uid};
 
-
-
-    
-    $("#addnav").on("click", function () {
-        $("#Defspace").hide();
-        $("#formid1").hide();
-        $("#certidiv").hide();
-        $("#examdiv").hide();
-        $("#Resultdiv").hide();
-        $("#addsub").show();
-
-        //alert('wo');
-
-        $("#addsubbtn").on("click",function(){
-            let sname=document.getElementById('txtsubadd').value;
-            let ptsname=/^[a-z0-9]{1,}$/ig;
-            if(ptsname.test(sname)==false){
-                alert('inavlid!!')
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: temp,
+            //dataType: "dataType",
+            success: function (response) {
+                $('#Resultdiv').html(response);
             }
-            else{
-                let temp={flag:7,sname:sname};
+        });
 
-                $.ajax({
-                    type: "POST",
-                    url: "ajax.php",
-                    data: temp,
-                    //dataType: "dataType",
-                    success: function (response) {
-                        sname.value="";
-                        alert(response);
-                    }
-                });
-            }
-            
-        })
 
     });
 
@@ -314,21 +404,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 });
 
-
-
-function adddistrict() {
-    if ($("#cmbstate").val() == 'gujarat') {
-        let opt = new Option("Surat", "Surat");
-        document.getElementById('cmbdist').add(opt);
-    }
-}
-
-function addcity() {
-    if ($("#cmbdist").val() == 'Surat') {
-        let opt = new Option("Surat", "Surat");
-        document.getElementById('cmbcity').add(opt);
-    }
-}
 function setval(x) {
     //console.log(typeof(x));
     //x=x.replace("opt","");
@@ -352,4 +427,5 @@ function setval(x) {
 
     }
 }
+
 
