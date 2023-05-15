@@ -307,7 +307,7 @@ elseif($flag==11){
                     <div class="card">
                         <div class="card-header"><h3 align ="center">Subject : '.$sname["subname"].'</h3></div>
                         <div class="card-body">
-                            <b><p class="card-text" align="center">Marks : '.$temp["attempt"].'</p></b>
+                            <b><p class="card-text" align="center">Marks : '.$temp["marks"].'</p></b>
                         </div>
                         <div class="card-footer">
                         <div class="card-footer bg-transparent border-success" align="center"><h6 >Total Attempts : '.$temp["attempt"].'</h6></div>

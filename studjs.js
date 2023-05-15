@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     showNavbar('header-toggle', 'nav-bar', 'body-pd', 'header')
 
-
+    var ct = 0;
 
     /*===== LINK ACTIVE =====*/
     const linkColor = document.querySelectorAll('.nav_link')
@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         let turl = url.split('=');
 
         let temp = { flag: 6, id: turl[1] };
-        uid=turl[1];
+        uid = turl[1];
         $.ajax({
             type: "POST",
             url: "ajax.php",
@@ -147,8 +147,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 if (navigator && navigator.userAgent && navigator.userAgent.indexOf('Mozilla') !== -1 && navigator.userAgent.indexOf('AppleWebKit') !== -1) {
                     // JavaScript is supported
 
-                    $("#examdiv").hide();
 
+
+                    $("#examdiv").hide();
+                    $('#header').hide();
+                    $('#nav-bar').hide();
                     var qno = [];
 
 
@@ -162,11 +165,40 @@ document.addEventListener("DOMContentLoaded", function (event) {
                         //dataType: "dataType",
                         success: function (response) {
                             $('#mainexambody').html(response);
+                            var elem = document.documentElement;
+
+                            // Check if fullscreen mode is supported
+                            if (elem.requestFullscreen) {
+                                // If supported, make the element fullscreen
+                                elem.requestFullscreen();
+                            } else if (elem.webkitRequestFullscreen) { // Safari
+                                elem.webkitRequestFullscreen();
+                            } else if (elem.msRequestFullscreen) { // IE/Edge
+                                elem.msRequestFullscreen();
+                            }
+                            ct = 0;
                         }
+
+
                     });
 
 
                     $('#mainexambody').show(function () {
+                        ct = 0;
+
+                        if (document.visibilityState && $('#mainexambody').is(':visible') == true) {
+
+                            document.addEventListener('visibilitychange', function () {
+
+                                if (document.visibilityState === 'hidden') {
+                                    // User has switched back to the tab or window
+                                    // alert("works!!");   
+                                    //ct = +1;
+                                    //$(document).off('visibilitychange', visibilityChangeHandler);
+                                    $("#fbtn").trigger("click");
+                                }
+                            });
+                        }
 
                         //finish button click
                         $('#fbtn').on('click', function () {
@@ -174,8 +206,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                             let trq;
 
                             //console.log(typeof(uid));
-                            
-                            let soln={flag:10,sid:uid.replace("#",""),subid: $('#examsub').val()};
+
+                            let soln = { flag: 10, sid: uid.replace("#", ""), subid: $('#examsub').val() };
                             $.ajax({
                                 type: "POST",
                                 url: "ajax.php",
@@ -204,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                                 //console.log('Checked value:', checkedValue);
 
                                                 //appending qno and ans to the object
-                                                soln[qn]=checkedValue;
+                                                soln[qn] = checkedValue;
 
                                                 // You can also access other attributes of the checked radio button
                                                 // For example: radioButtons[i].id, radioButtons[i].getAttribute('data-something'), etc.
@@ -222,8 +254,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                         //dataType: "dataType",
                                         success: function (response) {
                                             //console.log(response);  
-                                            $("#resultnav").trigger("click");
+                                            $('#header').show();
+                                            $('#nav-bar').show();
                                             $("#examdiv").hide();
+                                            $("#resultnav").trigger("click");
+                                            ct = 0;
+
                                         }
                                     });
 
@@ -258,7 +294,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         $("#Resultdiv").show();
         $('#mainexambody').hide();
 
-        let temp={flag:11,usid:uid};
+        let temp = { flag: 11, usid: uid };
 
         $.ajax({
             type: "POST",
