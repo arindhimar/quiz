@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="admincss.css" />
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
 
@@ -26,10 +27,29 @@
     <body id="body-pd">
         <header class="header" id="header">
             <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+            <nav class="navbar bg-body-tertiary" id='nav2'>
+                <div class="container-fluid">
+                    <form class="d-flex" role="search">
 
+                        <input class="form-control me-2" type="search" placeholder="Search User ID" id='srchbox' aria-label="Search">
+                        <!-- <button class="btn btn-outline-success" type="Refresh">Refresh</button> -->
+                    </form>
+                </div>
+
+            </nav>
+            <nav class="navbar bg-body-tertiary" id='nav3'>
+                <div class="container-fluid">
+                    <form class="d-flex" role="search">
+
+                        <input class="form-control me-2" type="search" placeholder="Search User Name" id='namesrchbox' aria-label="Search">
+                        <!-- <button class="btn btn-outline-success" type="Refresh">Refresh</button> -->
+                    </form>
+                </div>
+            </nav>
         </header>
         <div class="l-navbar" id="nav-bar">
             <nav class="nav">
+
                 <div> <a href="#" class="hnav_logo">
                         <div class="header_img"> <img class='bx bx-layer nav_logo-icon' src="loginback.jpg" alt="">
                         </div> <span class="nav_logo-name">VNSGU</span>
@@ -40,10 +60,10 @@
 
                         <a href="#" id="addstdnav" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">Add Student</span> </a>
 
+                        <a href="#" id="searchnav" class="nav_link"> <i class="fas fa-search nav_icon"></i><span class="nav_name">Search Student</span> </a>
 
-                        <a href="#" id="certinav" class="nav_link"> <i class='bx bx-message-square-detail nav_icon'></i>
-                            <span class="nav_name">Certificates</span> </a>
 
+            
 
                         <a href="#" id="addnav" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> <span class="nav_name">Add Subject</span> </a>
 
@@ -64,10 +84,6 @@
 
             <div id="Defspace">
 
-                <h1>Student Details</h1>
-
-
-
                 <div class="addsdet animate-up">
                     <div id='trydisp' style="display: flex; justify-content: center;  justify-content: space-between; gap: 0px;">
 
@@ -76,16 +92,13 @@
             </div>
 
 
-
-
-
             <div id="formid1">
 
 
 
-                <h4 class="addsdet">Add Student Details</h4>
+                <!-- <h4 class="addsdet">Add Student Details</h4> -->
 
-                <form class="row g-3">
+                <form class="row g-3 mt-5">
 
 
 
@@ -184,6 +197,17 @@
             </div>
 
 
+            <div id='searchdiv'>
+                <div class="card border-secondary" style="width: 100%;" id='searchnavres'>
+                    
+
+
+                </div>
+
+
+            </div>
+
+
 
 
 
@@ -197,7 +221,7 @@
 
             <div id="addsub" style="display: none;">
 
-                
+
                 <form class="row g-3">
 
 
@@ -259,55 +283,55 @@
 
                 <div class="card" style="width: 100%; margin-top:2%" id='addq'>
                     <div class="card-body">
-                        <div class="mb-3">
-                            <label class="form-label"><b>Question</b></label>
-                            <textarea class="form-control" id="txtque" rows="3"></textarea>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label class="form-label"><b>Option A</b></label>
-                            <textarea class="form-control" id="opta" rows="1" oninput="setval(id)"></textarea>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label"><b>Option B</b></label>
-                            <textarea class="form-control" id="optb" rows="1" oninput="setval(id)"></textarea>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label"><b>Option C</b></label>
-                            <textarea class="form-control" id="optc" rows="1" oninput="setval(id)"></textarea>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label"><b>Option D</b></label>
-                            <textarea class="form-control" id="optd" rows="1" oninput="setval(id)"></textarea>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label"><b>Correct Option</b></label>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="crtans" id="inlineRadio1" checked>
-                                <label class="form-check-label" for="inlineRadio1">A</label>
+                        <form id="f2">
+                            <div class="mb-3">
+                                <label class="form-label"><b>Question</b></label>
+                                <textarea class="form-control" id="txtque" rows="3"></textarea>
                             </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="crtans" id="inlineRadio2">
-                                <label class="form-check-label" for="inlineRadio2">B</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="crtans" id="inlineRadio3">
-                                <label class="form-check-label" for="inlineRadio3">C</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="crtans" id="inlineRadio4">
-                                <label class="form-check-label" for="inlineRadio4">D</label>
-                            </div>
-                        </div>
-
-                        <innput type="button" class="btn btn-secondary" style="width: 100%;" id='addqbtn' value='submit'>Add Question
 
 
+                            <div class="mb-3">
+                                <label class="form-label"><b>Option A</b></label>
+                                <textarea class="form-control" id="opta" rows="1" oninput="setval(id)"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label"><b>Option B</b></label>
+                                <textarea class="form-control" id="optb" rows="1" oninput="setval(id)"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label"><b>Option C</b></label>
+                                <textarea class="form-control" id="optc" rows="1" oninput="setval(id)"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label"><b>Option D</b></label>
+                                <textarea class="form-control" id="optd" rows="1" oninput="setval(id)"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label"><b>Correct Option</b></label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="crtans" id="inlineRadio1" checked>
+                                    <label class="form-check-label" for="inlineRadio1">A</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="crtans" id="inlineRadio2">
+                                    <label class="form-check-label" for="inlineRadio2">B</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="crtans" id="inlineRadio3">
+                                    <label class="form-check-label" for="inlineRadio3">C</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="crtans" id="inlineRadio4">
+                                    <label class="form-check-label" for="inlineRadio4">D</label>
+                                </div>
+                            </div>
+
+                            <innput type="button" class="btn btn-secondary" style="width: 100%;" id='addqbtn' value='submit'>Add Question
+                        </form>
                     </div>
 
 
@@ -319,9 +343,61 @@
 
             <div id="Resultdiv">
 
-                <h1>Result Div</h1>
+                <!-- <h1>Result Div</h1> -->
+
+                <div class="card" id='cd1' style="width: 100%;">
+                    <div class="card-body">
+
+                        <div id='rdiv1'>
+                            <h5 class="card-title" style="text-align: center;">Subject Name</h5>
+                            <div class="dropdown">
+                                <br>
+                                <select class="btn btn-secondary dropdown-toggle" id="rssub" style="width: 100%;">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <br>
+
+                <div id='cd2' class="card" style="width: 100%;">
+                    <div class="card-body">
+
+                        <div id='rdiv2'>
+                            <h5 class="card-title" style="text-align: center;">Order By</h5>
+                            <select class="btn btn-secondary dropdown-toggle mb-5" id="rssuborder" style="width: 100%;">
+                                <option selected value="asc">Low To High</option>
+                                <option selected value="desc">High To Low</option>
+                            </select>
+                            <form class="d-flex" role="search">
+                                <input class="form-control me-2" type="search" placeholder="User Id" id='rsuid' aria-label="Search">
+                                <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+                            </form>
+                        </div>
+
+                        <br>
+
+                    </div>
+
+
+                    <div class="card-body">
+
+                        <div id='rdiv3'>
+
+                        </div>
+
+                        <br>
+
+                    </div>
+
+                </div>
+
+
 
             </div>
+        </div>
 
 
 

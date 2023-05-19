@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Admin Panel</title>
+    <title>Student Panel</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
@@ -37,15 +37,6 @@
                     <div class="nav_list">
 
                         <a href="#" id="stdetnav" class="nav_link active"> <i class='bx bx-grid-alt nav_icon'></i> <span class="nav_name">Profile</span> </a>
-
-
-
-
-                        <a href="#" id="certinav" class="nav_link"> <i class='bx bx-message-square-detail nav_icon'></i>
-                            <span class="nav_name">Certificates</span> </a>
-
-
-
 
 
                         <a href="#" id="examnav" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span class="nav_name">Give Exam</span> </a>
@@ -84,29 +75,31 @@
             </div>
 
 
+            <div id="blurOverlay">
 
-            <div id="examdiv">
-                <div class="addsdet animate-down">
-                    <div class="card" style="width: 100%;">
-                        <div class="card-body">
-                            <div id='dm1'>
-                                <h5 class="card-title" style="text-align: center;">Subject Name</h5>
-                                <div class="dropdown">
-                                    <select class="btn btn-secondary dropdown-toggle" id="examsub" style="width: 100%;">
-                                    </select>
+                <div id="examdiv">
+                    <div class="addsdet animate-down">
+                        <div class="card" style="width: 100%;">
+                            <div class="card-body">
+                                <div id='dm1'>
+                                    <h5 class="card-title" style="text-align: center;">Subject Name</h5>
+                                    <div class="dropdown">
+                                        <select class="btn btn-secondary dropdown-toggle" id="examsub" style="width: 100%;">
+                                        </select>
+                                    </div>
+                                    <button type="button" style="width: 100%;" class="btn btn-primary" id='examver'>Start</button>
                                 </div>
-                                <button type="button" style="width: 100%;" class="btn btn-primary" id='examver'>Start</button>
-                            </div>
 
-                            <br>
+                                <br>
+
+                            </div>
 
                         </div>
 
                     </div>
 
+
                 </div>
-
-
             </div>
 
 

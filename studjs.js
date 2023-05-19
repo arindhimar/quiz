@@ -1,5 +1,3 @@
-
-
 document.addEventListener("DOMContentLoaded", function (event) {
     const showNavbar = (toggleId, navId, bodyId, headerId) => {
         const toggle = document.getElementById(toggleId),
@@ -177,6 +175,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                 elem.msRequestFullscreen();
                             }
                             ct = 0;
+
+                            // Enable the button
+
+                            $("#fbtn").prop("disabled", false);
+                            $("#submst").hide();
+
                         }
 
 
@@ -185,23 +189,35 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
                     $('#mainexambody').show(function () {
                         ct = 0;
+                        $("#blurOverlay").hide();
 
-                        if (document.visibilityState && $('#mainexambody').is(':visible') == true) {
+                        // if (document.visibilityState && $('#mainexambody').is(':visible') == true) {
+                        //     // Tab change detection
+                        //     $(window).blur(function () {
+                        //         // Tab has changed, do something
+                        //         $(window).off("blur");
+                        //         $("#fbtn").trigger("click");
+                        //         // Disable the button
+                        //         $("#fbtn").prop("disabled", true);
+                        //     });
 
-                            document.addEventListener('visibilitychange', function () {
-
-                                if (document.visibilityState === 'hidden') {
-                                    // User has switched back to the tab or window
-                                    // alert("works!!");   
-                                    //ct = +1;
-                                    //$(document).off('visibilitychange', visibilityChangeHandler);
-                                    $("#fbtn").trigger("click");
-                                }
-                            });
-                        }
+                        //     // Screen size change detection
+                        //     $(window).resize(function () {
+                        //         // Screen size has changed, do something
+                        //         $(window).off("resize");
+                        //         $("#fbtn").trigger("click");
+                        //         // Disable the button
+                        //         $("#fbtn").prop("disabled", true);
+                        //     });
+                        // }
 
                         //finish button click
                         $('#fbtn').on('click', function () {
+                           
+                            $("#submst").hide();
+
+                            // Disable the button
+                            $("#fbtn").prop("disabled", true);
                             let temp = { flag: 9, sname: $('#examsub').val() };
                             let trq;
 
@@ -254,6 +270,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                         //dataType: "dataType",
                                         success: function (response) {
                                             //console.log(response);  
+                                            // Standard method  to exit full screen
+                                            if (document.exitFullscreen) {
+                                                document.exitFullscreen();
+                                            } else if (document.webkitExitFullscreen) { // Older web browsers
+                                                document.webkitExitFullscreen();
+                                            }
                                             $('#header').show();
                                             $('#nav-bar').show();
                                             $("#examdiv").hide();
@@ -439,6 +461,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 
 });
+
+function updtacc(x){
+    //console.log(x);
+    //window.location.href="";
+    window.open("update.php?uid="+x+"", "_blank");
+}
+
+
+
+
 
 function setval(x) {
     //console.log(typeof(x));

@@ -1,5 +1,3 @@
-
-
 document.addEventListener("DOMContentLoaded", function (event) {
     const showNavbar = (toggleId, navId, bodyId, headerId) => {
         const toggle = document.getElementById(toggleId),
@@ -40,36 +38,24 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     /*Code For Main Working Space*/
 
-    /* Toggling */
-
-
-    //Default
-    //$("#Defspace").show();
-    // $("#formid1").hide();
-    // $("#certidiv").hide();
-    // $("#examdiv").hide();
-    // $("#Resultdiv").hide();
-
-    // function ontoggle()
-    // {
-    //     $("#Defspace").toggle();
-    //     $("#formid1").toggle();
-    //     $("#certidiv").toggle();
-    //     $("#examdiv").toggle();
-    //     $("#Resultdiv").toggle();
-    // }
+    /* Toggling Menu */
 
     $("#stdetnav").on("click", function () {
         $("#Defspace").show();
+        $("#nav3").hide();
+        $("#nav2").show();
         $("#formid1").hide();
         $("#certidiv").hide();
         $("#examdiv").hide();
         $("#Resultdiv").hide();
+        $("#searchdiv").hide();
         $("#addsub").hide();
-        
+
         // alert("asdbkjahsk")
         let temp = { flag: 3 };
 
+
+        //Display All Student Deatails
         $.ajax({
             type: "POST",
             url: "ajax.php",
@@ -88,37 +74,102 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 
     $("#addstdnav").on("click", function () {
+        $("#nav2").hide();
+        $("#nav3").hide();
         $("#Defspace").hide();
         $("#formid1").show();
         $("#certidiv").hide();
         $("#examdiv").hide();
         $("#Resultdiv").hide();
+        $("#searchdiv").hide();
         $("#addsub").hide();
+
+    })
+
+    $("#searchnav").on("click", function () {
+        $("#nav2").hide();
+        $("#nav3").show();
+        $("#Defspace").hide();
+        $("#formid1").hide();
+        $("#certidiv").hide();
+        $("#examdiv").hide();
+        $("#Resultdiv").hide();
+        $("#searchdiv").show();
+        $("#addsub").hide();
+
+
+
+        let temp = { flag: 16 };
+
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: temp,
+            //dataType: "dataType",
+            success: function (response) {
+                $('#searchnavres').html(response);
+            }
+        });
+
+        //Result User Id Search
+        $('#namesrchbox').on('input', function () {
+            let text = $('#namesrchbox').val();
+
+            let ptuid = /^[A-Za-z]{1,}$/;
+
+            if (text == "") {
+                $("#searchnav").trigger("click");
+            }
+            else if (ptuid.test(text) == true) {
+                let temp = { flag: 17, uname: $('#namesrchbox').val() };
+                $.ajax({
+                    type: "POST",
+                    url: "ajax.php",
+                    data: temp,
+                    //dataType: "dataType",
+                    success: function (response) {
+                        $('#searchnavres').html(response);
+                    }
+                });
+            }
+            else {
+                $('#searchnavres').html("Invalid User Name");
+            }
+        });
+
+
 
     })
 
     $("#certinav").on("click", function () {
         $("#Defspace").hide();
+        $("#nav2").hide();
+        $("#nav3").hide();
         $("#formid1").hide();
         $("#certidiv").show();
         $("#examdiv").hide();
         $("#Resultdiv").hide();
+        $("#searchdiv").hide();
         $("#addsub").hide();
 
     })
 
     $("#examnav").on("click", function () {
         $("#Defspace").hide();
+        $("#nav2").hide();
+        $("#nav3").hide();
         $("#formid1").hide();
         $("#certidiv").hide();
         $("#examdiv").show();
         $("#Resultdiv").hide();
+        $("#searchdiv").hide();
         $("#addsub").hide();
 
         $("#addq").hide();
 
         let temp = { flag: 4 };
 
+        //Request for Exam Subject
         $.ajax({
             type: "POST",
             url: "ajax.php",
@@ -128,26 +179,136 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 $('#examsub').html(response);
             }
         });
-
-
-
     })
 
 
 
+
+    //Result Div
     $("#resultnav").on("click", function () {
         $("#Defspace").hide();
+        $("#nav2").hide();
+        $("#nav3").hide();
         $("#formid1").hide();
         $("#certidiv").hide();
         $("#examdiv").hide();
         $("#Resultdiv").show();
         $("#addsub").hide();
+        $("#searchdiv").hide();
+        $('#cd2').hide();
+
+
+        let temp = { flag: 4 };
+
+        //Request for Exam Subject
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: temp,
+            success: function (response) {
+                //alert(response);
+                $('#rssub').html(response);
+            }
+        });
+
+
+
+        $('#rssub').on('click', function () {
+            if ($('#rssub').val() == null) {
+            }
+            else {
+                $('#cd2').show();
+                let temp = { flag: 12, subid: $('#rssub').val(), order: $('#rssuborder').val() };
+                $.ajax({
+                    type: "POST",
+                    url: "ajax.php",
+                    data: temp,
+                    //dataType: "dataType",
+                    success: function (response) {
+                        $('#rdiv3').html(response);
+                    }
+                });
+            }
+        })
+
+        $('#rssuborder').on('click', function () {
+            if ($('#rssub').val() == null) {
+            }
+            else {
+                $('#cd2').show();
+                let temp = { flag: 12, subid: $('#rssub').val(), order: $('#rssuborder').val() };
+                $.ajax({
+                    type: "POST",
+                    url: "ajax.php",
+                    data: temp,
+                    //dataType: "dataType",
+                    success: function (response) {
+                        $('#rdiv3').html(response);
+                    }
+                });
+            }
+        })
+
+
+
+
+    });
+
+
+    //Search Box Input
+    $('#srchbox').on('input', function () {
+        let text = $('#srchbox').val();
+
+        if (text != "") {
+            let temp = { flag: 13, uid: text };
+
+            $.ajax({
+                type: "POST",
+                url: "ajax.php",
+                data: temp,
+                //dataType: "dataType",
+                success: function (response) {
+                    $('#trydisp').html(response);
+                }
+            });
+        }
+        else {
+            $("#stdetnav").trigger("click");
+        }
+
+    });
+
+
+    //Result User Id Search
+    $('#rsuid').on('input', function () {
+        let text = $('#rsuid').val();
+
+        let ptuid = /^\d{5,}$/;
+
+        if (text == "") {
+            $("#rssuborder").trigger("click");
+        }
+        else if (ptuid.test(text) == true) {
+            let temp = { flag: 14, subid: $('#rssub').val(), order: $('#rssuborder').val(), uid: text };
+            $.ajax({
+                type: "POST",
+                url: "ajax.php",
+                data: temp,
+                //dataType: "dataType",
+                success: function (response) {
+                    $('#rdiv3').html(response);
+                }
+            });
+        }
+        else {
+            $('#rdiv3').html("Invalid User Id");
+        }
     });
 
 
 
 
-    
+
     $("#addnav").on("click", function () {
         $("#Defspace").hide();
         $("#formid1").hide();
@@ -158,14 +319,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
         //alert('wo');
 
-        $("#addsubbtn").on("click",function(){
-            let sname=document.getElementById('txtsubadd').value;
-            let ptsname=/^[a-z0-9]{1,}$/ig;
-            if(ptsname.test(sname)==false){
+
+        $("#addsubbtn").on("click", function () {
+            let sname = document.getElementById('txtsubadd').value;
+            let ptsname = /^[a-z0-9]{1,}$/ig;
+            if (ptsname.test(sname) == false) {
                 alert('inavlid!!')
             }
-            else{
-                let temp={flag:7,sname:sname};
+            else {
+                let temp = { flag: 7, sname: sname };
 
                 $.ajax({
                     type: "POST",
@@ -173,12 +335,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     data: temp,
                     //dataType: "dataType",
                     success: function (response) {
-                        sname.value="";
+                        sname.value = "";
                         alert(response);
                     }
                 });
             }
-            
+
         })
 
     });
@@ -196,11 +358,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
         else {
             $("#addq").show();
             //console.log($('#examsub').val());
+
         }
     })
 
     $('#addqbtn').on('click', function () {
-        if ($('#txtque').val() == null || $('#opta').val() == null || $('#optb').val() == null || $('#optc').val() == null || $('#optd').val() == null) {
+        if ($('#txtque').val() == '' || $('#opta').val() == '' || $('#optb').val() == '' || $('#optc').val() == '' || $('#optd').val() == '') {
             alert('Please fill all the details!!!');
         }
         else {
@@ -223,7 +386,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 //dataType: "dataType",
                 success: function (response) {
                     //console.log(response);
-
+                    //$("#examsub").trigger( "click" );
                 }
             });
         }
@@ -314,6 +477,33 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 });
 
+function updtacc(x) {
+    console.log(x);
+    //window.location.href="";
+    window.open("update.php?uid=" + x + "", "_blank");
+}
+
+function delacc(x) {
+    //console.log(x);
+    //window.location.href="";
+    temp = { flag: 19, uid: x };
+    $.ajax({
+        type: "POST",
+        url: "ajax.php",
+        data: temp,
+        //dataType: "dataType",
+        success: function (response) {
+            if (response == "done") {
+                $('#searchnav').trigger('click');
+            }
+            else {
+                alert(response);
+            }
+        }
+    });
+}
+
+
 
 
 function adddistrict() {
@@ -348,8 +538,6 @@ function setval(x) {
     }
     else if (x == 'optd') {
         $('#inlineRadio4').val($('#' + x).val());
-
-
     }
 }
 
